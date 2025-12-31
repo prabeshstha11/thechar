@@ -10,9 +10,12 @@ export default function CharacterQuiz({ characterMap }: CharacterQuizProps) {
     const [currentState, setCurrentState] = useState<number>(0);
     const [inputValue, setInputValue] = useState<string>("");
     const [isWrongAnswer, setIsWrongAnswer] = useState<boolean>(false);
+    const [animatePulse, setAnimatePulse] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const keys = useMemo(() => Object.keys(shuffledMap), [shuffledMap]);
+    const totalItems = keys.length;
+    const progress = totalItems > 0 ? (currentState / totalItems) * 100 : 0;
 
     useEffect(() => {
         setShuffledMap(shuffleObject(characterMap));
@@ -29,30 +32,56 @@ export default function CharacterQuiz({ characterMap }: CharacterQuizProps) {
         const correctAnswer = keys[currentState];
 
         if (answer === correctAnswer) {
-            const totalItems = keys.length;
             setInputValue("");
             setIsWrongAnswer(false);
+            setAnimatePulse(true);
+            setTimeout(() => setAnimatePulse(false), 300);
             setCurrentState((prev) => (prev === totalItems - 1 ? 0 : prev + 1));
         } else {
             setIsWrongAnswer(true);
             setInputValue("");
+            // Auto hide wrong message after 2s or on next input
         }
     };
 
     return (
         <div className="app-ui">
-            <span className="count">Count: {currentState}</span>
-            <div className="character">{shuffledMap[keys[currentState]]}</div>
+            <div className="progress-container">
+                <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+            </div>
+            <span className="count">
+                Character {currentState + 1} of {totalItems}
+            </span>
+            <div className={`character ${animatePulse ? "pulse" : ""}`}>
+                {shuffledMap[keys[currentState]]}
+            </div>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
                     gameContinue();
                 }}
             >
-                <input type="text" ref={inputRef} onChange={(e) => setInputValue(e.target.value)} value={inputValue} />
-                {isWrongAnswer && <span className="message">Wrong Answer! Please try again!</span>}
+                <div className="input-container">
+                    <input
+                        type="text"
+                        ref={inputRef}
+                        onChange={(e) => {
+                            setInputValue(e.target.value);
+                            if (isWrongAnswer) setIsWrongAnswer(false);
+                        }}
+                        value={inputValue}
+                        className={isWrongAnswer ? "wrong" : ""}
+                        placeholder="Type romaji..."
+                        autoComplete="off"
+                    />
+                </div>
+                {isWrongAnswer && (
+                    <span className="message">
+                        Not quite! The correct romaji for "{shuffledMap[keys[currentState]]}" is "{keys[currentState]}".
+                    </span>
+                )}
                 <button type="submit" disabled={isSubmitDisabled}>
-                    Check
+                    {isWrongAnswer ? "Try Again" : "Check Answer"}
                 </button>
             </form>
         </div>

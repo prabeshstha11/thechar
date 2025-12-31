@@ -8,14 +8,14 @@ export const Route = createFileRoute("/")({
 function App() {
     return (
         <div className="app">
-            <h1>Choose what you want to learn: </h1>
-            <h2>Japanese 🇯🇵</h2>
+            <h1>TheChar</h1>
+            <h2>Master Japanese characters with spaced repetition. 🇯🇵</h2>
             <div className="lesson-category">
                 <Link to="/hiragana" className="lesson">
-                    Hiragana (complete)
+                    Hiragana
                 </Link>
                 <Link to="/katakana" className="lesson">
-                    Katakana (complete)
+                    Katakana
                 </Link>
             </div>
         </div>
