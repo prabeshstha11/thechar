@@ -9,7 +9,7 @@ function App() {
     return (
         <div className="app">
             <h1>TheChar</h1>
-            <h2>Master Japanese characters with spaced repetition. 🇯🇵</h2>
+            <h2>Practice Japanese characters.</h2>
             <div className="lesson-category">
                 <Link to="/hiragana" className="lesson">
                     Hiragana

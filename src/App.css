@@ -8,7 +8,7 @@ h1 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
     font-weight: 800;
-    background: linear-gradient(to right, #818cf8, #c084fc);
+    background: linear-gradient(to right, #7aa2f7, #bb9af7);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -30,8 +30,6 @@ h2 {
 .lesson {
     text-decoration: none;
     background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
     color: var(--text-main);
     padding: 1.5rem;
@@ -44,14 +42,11 @@ h2 {
     justify-content: center;
     text-align: center;
     transition: var(--transition);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .lesson:hover {
-    transform: translateY(-4px);
-    background: rgba(255, 255, 255, 0.1);
+    background: #2f3549;
     border-color: var(--primary);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
 }
 
 .lesson::after {
